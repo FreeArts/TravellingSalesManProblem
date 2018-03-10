@@ -30,7 +30,8 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    roadpermutations.h
+    roadpermutations.h \
+    interfaces.h
 
 FORMS += \
         mainwindow.ui
