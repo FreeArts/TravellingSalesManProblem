@@ -4,3 +4,8 @@ RoadPermutations::RoadPermutations(QObject *parent) : QObject(parent)
 {
 
 }
+
+RoadPermutations::~RoadPermutations()
+{
+
+}
