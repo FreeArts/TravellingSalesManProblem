@@ -2,6 +2,7 @@
 #define ROADPERMUTATIONS_H
 
 #include <QObject>
+#include <QVector>
 #include "interfaces.h"
 
 class RoadPermutations : public QObject
@@ -14,9 +15,13 @@ public:
 
 private:
 
-    void setAllPermutation(QVector<Point::Coordinate> const &l_allPoints_struct);
-    void filterPossibilityPermForGreedyPoint(QVector<Point::Coordinate> const &l_allPossibility_struct);
-    void filterInversePermutations(QVector<Point::Coordinate> const &l_PossibilityPerm_struct);
+    QVector<Point::Coordinate> m_allPermutations_v;
+    QVector<Point::Coordinate> m_possibilityPermutations_v;
+    QVector<Point::Coordinate> m_filteredPermutations_v;
+
+    void setAllPermutation(QVector<Point::Coordinate> const &l_allPoints_v);
+    void filterPossibilityPermForGreedyPoint(QVector<Point::Coordinate> const &l_allPossibility_v);
+    void filterInversePermutations(QVector<Point::Coordinate> const &l_PossibilityPerm_v);
 
 signals:
 

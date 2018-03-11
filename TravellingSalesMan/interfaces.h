@@ -6,11 +6,9 @@
 namespace Point{
 
 struct Coordinate{
-
     QString name;
     QChar x;
     QChar y;
-
     };
 }
 
