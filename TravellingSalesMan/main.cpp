@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     test_vector.push_back(test_point3);
 
     RoadPermutations test;
-
     test.setAllPermutation(test_vector);
 
     return a.exec();

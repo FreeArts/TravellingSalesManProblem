@@ -22,7 +22,7 @@ public:
 
 private:
 
-    QVector<Point::Coordinate> m_allPermutations_v;
+    QVector< QVector< Point::Coordinate > > m_allPermutations_v;
     QVector<Point::Coordinate> m_possibilityPermutations_v;
     QVector<Point::Coordinate> m_filteredPermutations_v;
 
