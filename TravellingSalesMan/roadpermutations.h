@@ -20,13 +20,12 @@ public:
 
 private:
 
-    void setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v);
     QVector< QVector< Point::Coordinate > > m_allPermutations_v;
     QVector< QVector< Point::Coordinate > > m_possibilityPermutations_v;
     QVector< QVector< Point::Coordinate > > m_filteredPermutations_v;
 
+    void setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v);
     void filterPossibilityPermForGreedyPoint();
-    void filterInversePermutations(QVector< QVector< Point::Coordinate > > l_PossibilityPerm_v);
 
 signals:
 
