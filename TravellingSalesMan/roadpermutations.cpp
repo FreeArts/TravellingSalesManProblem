@@ -10,27 +10,73 @@ RoadPermutations::~RoadPermutations()
 
 }
 
-void RoadPermutations::setAllPermutation( QVector<Point::Coordinate> l_allPoints_v)
+void RoadPermutations::startPermutations(QVector<Point::Coordinate> l_allPoints_v)
 {
-    QVector< Point::Coordinate > l_tmpCopyVector_v;
+    setAllPermutation(l_allPoints_v);
+}
 
-    m_allPermutations_v.push_back(l_allPoints_v);
-     while(std::next_permutation(l_allPoints_v.begin(), l_allPoints_v.end())){
-         QVector<Point::Coordinate> l_tmpCopyVector_v;
+void RoadPermutations::setAllPermutation( QVector<Point::Coordinate> l_allPointsPrepare_v)
+{
+    m_allPermutations_v.push_back(l_allPointsPrepare_v);
+     while(std::next_permutation(l_allPointsPrepare_v.begin(), l_allPointsPrepare_v.end())){
+        QVector<Point::Coordinate> l_tmpCopyVector_v;
         l_tmpCopyVector_v.clear();
 
-         for(int l_iterator_i = 0; l_iterator_i < l_allPoints_v.size(); l_iterator_i++){
-                l_tmpCopyVector_v.push_back(l_allPoints_v.value(l_iterator_i));
+        for(int l_iterator_i = 0; l_iterator_i < l_allPointsPrepare_v.size(); l_iterator_i++){
+                l_tmpCopyVector_v.push_back(l_allPointsPrepare_v.value(l_iterator_i));
          }
          m_allPermutations_v.push_back(l_tmpCopyVector_v);
      }
+
+     ///* For Debug
+     QString string;
+          for(int x = 0; x< m_allPermutations_v.size(); x++){
+                   for(int y = 0; y< m_allPermutations_v.at(x).size(); y++){
+                          string = string + m_allPermutations_v[x][y].name;
+                          if(y == m_allPermutations_v.at(x).size()-1)
+                          {
+                              string.push_back("        ");
+                          }
+                   }
+               }
+
+          qDebug() << string;
+     //--------------*/
+  filterPossibilityPermForGreedyPoint();
 }
 
-void RoadPermutations::filterPossibilityPermForGreedyPoint(QVector<Point::Coordinate> l_allPossibility_v)
+void RoadPermutations::filterPossibilityPermForGreedyPoint()
 {
+    QVector< Point::Coordinate > l_copyVector_v;
+    l_copyVector_v.clear();
+
+    for(int x = 0; x< m_allPermutations_v.size(); x++){
+         l_copyVector_v.clear();
+        if( m_allPermutations_v[x][0].name == "A"){
+            for(int y = 0; y< m_allPermutations_v.at(x).size(); y++){
+                  l_copyVector_v.push_back(m_allPermutations_v[x][y]);
+            }
+             m_possibilityPermutations_v.push_back(l_copyVector_v);
+         }
+     }
+
+    ///* For Debug
+    QString string;
+         for(int x = 0; x< m_possibilityPermutations_v.size(); x++){
+                  for(int y = 0; y< m_possibilityPermutations_v.at(x).size(); y++){
+                         string = string + m_possibilityPermutations_v[x][y].name;
+                         if(y == m_possibilityPermutations_v.at(x).size()-1)
+                         {
+                             string.push_back("        ");
+                         }
+                  }
+              }
+        qDebug() << "--------------------";
+         qDebug() << string;
+    //--------------*/
 }
 
-void RoadPermutations::filterInversePermutations(QVector<Point::Coordinate> l_PossibilityPerm_v)
+void RoadPermutations::filterInversePermutations(QVector<QVector<Point::Coordinate> > l_PossibilityPerm_v)
 {
 
 }

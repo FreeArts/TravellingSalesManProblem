@@ -16,15 +16,17 @@ public:
     explicit RoadPermutations(QObject *parent = nullptr);
     ~RoadPermutations();
 
-    void setAllPermutation(QVector<Point::Coordinate> l_allPoints_v);
-    void filterPossibilityPermForGreedyPoint(QVector<Point::Coordinate>  l_allPossibility_v);
-    void filterInversePermutations(QVector<Point::Coordinate> l_PossibilityPerm_v);
+    void startPermutations(QVector<Point::Coordinate> l_allPoints_v);
 
 private:
 
+    void setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v);
     QVector< QVector< Point::Coordinate > > m_allPermutations_v;
-    QVector<Point::Coordinate> m_possibilityPermutations_v;
-    QVector<Point::Coordinate> m_filteredPermutations_v;
+    QVector< QVector< Point::Coordinate > > m_possibilityPermutations_v;
+    QVector< QVector< Point::Coordinate > > m_filteredPermutations_v;
+
+    void filterPossibilityPermForGreedyPoint();
+    void filterInversePermutations(QVector< QVector< Point::Coordinate > > l_PossibilityPerm_v);
 
 signals:
 
