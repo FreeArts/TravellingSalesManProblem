@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
 
     RoadPermutations test;
     test.startPermutations(test_vector);
+    test.roadLenghtCalculate();
 
     return a.exec();
 }

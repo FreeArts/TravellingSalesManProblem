@@ -26,14 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    roadpermutations.cpp \
-    roadcalculate.cpp
+    roadpermutations.cpp
 
 HEADERS += \
         mainwindow.h \
     roadpermutations.h \
-    interfaces.h \
-    roadcalculate.h
+    interfaces.h
 
 FORMS += \
         mainwindow.ui

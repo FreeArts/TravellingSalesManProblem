@@ -2,8 +2,14 @@
 #define INTERFACES_H
 
 #include <QObject>
+#include <QString>
 
 namespace Point{
+
+struct  RoadLenght{
+      QString roadName;
+      uint lenght;
+};
 
     class Coordinate{
     public:

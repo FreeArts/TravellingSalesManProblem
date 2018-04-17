@@ -16,21 +16,30 @@ void RoadPermutations::startPermutations(QVector<Point::Coordinate> l_allPoints_
     filterPossibilityPermForGreedyPoint();
 }
 
+void RoadPermutations::roadLenghtCalculate()
+{
+    for(int x =0; x < m_possibilityPermutations_v.size();x++){
+            QString l_roadName = "";
+            for(int y = 0; y< m_possibilityPermutations_v.at(x).size(); y++){
+                l_roadName = l_roadName + m_possibilityPermutations_v[x][y].name;
+            }
+    }
+}
+
 void RoadPermutations::setAllPermutation( QVector<Point::Coordinate> l_allPointsPrepare_v)
 {
     m_allPermutations_v.push_back(l_allPointsPrepare_v);
      while(std::next_permutation(l_allPointsPrepare_v.begin(), l_allPointsPrepare_v.end())){
 
-        //-----------------------------DO NOT USE THESE LINES 'CAUSE EAT ALL MEMORY--------------------
-        // QVector<Point::Coordinate> l_tmpCopyVector_v;
-        //l_tmpCopyVector_v.clear();
+        /*-----------------------------DO NOT USE THESE LINES 'CAUSE EAT ALL MEMORY--------------------
+         QVector<Point::Coordinate> l_tmpCopyVector_v;
+        l_tmpCopyVector_v.clear();
 
-       /* for(int l_iterator_i = 0; l_iterator_i < l_allPointsPrepare_v.size(); l_iterator_i++){
+        for(int l_iterator_i = 0; l_iterator_i < l_allPointsPrepare_v.size(); l_iterator_i++){
                 l_tmpCopyVector_v.push_back(l_allPointsPrepare_v.value(l_iterator_i));
-         }*/
-         //m_allPermutations_v.push_back(l_tmpCopyVector_v);
-         //---------------------------------------------------------------------------------------
-
+         }
+         m_allPermutations_v.push_back(l_tmpCopyVector_v);
+         ---------------------------------------------------------------------------------------*/
         m_allPermutations_v.push_back(l_allPointsPrepare_v);
      }
 
@@ -80,4 +89,11 @@ void RoadPermutations::filterPossibilityPermForGreedyPoint()
         qDebug() << "--------------------";
          qDebug() << string;
     //--------------*/
+
+     //Init roadLenght Vector
+        for(int l_vectorIterator_i = 0; l_vectorIterator_i < m_possibilityPermutations_v.size();l_vectorIterator_i++){
+            Point::RoadLenght *l_roadsLengh;
+            m_roadsLenght_v.push_back(l_roadsLengh);
+        }
+       //WTF
 }

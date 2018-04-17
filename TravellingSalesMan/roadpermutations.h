@@ -17,12 +17,12 @@ public:
     ~RoadPermutations();
 
     void startPermutations(QVector<Point::Coordinate> l_allPoints_v);
+    void roadLenghtCalculate();
 
 private:
-
     QVector< QVector< Point::Coordinate > > m_allPermutations_v;
     QVector< QVector< Point::Coordinate > > m_possibilityPermutations_v;
-    QVector< QVector< Point::Coordinate > > m_filteredPermutations_v;
+    QVector<Point::RoadLenght *> m_roadsLenght_v;
 
     void setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v);
     void filterPossibilityPermForGreedyPoint();
