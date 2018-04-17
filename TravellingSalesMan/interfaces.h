@@ -14,8 +14,8 @@ struct  RoadLenght{
     class Coordinate{
     public:
         QString name;
-        QChar x;
-        QChar y;
+        int x;
+        int y;
 
         void swap(Coordinate& targetClass)
         {

@@ -1,4 +1,5 @@
 #include "roadpermutations.h"
+#include <QtMath>
 
 RoadPermutations::RoadPermutations(QObject *parent) : QObject(parent)
 {
@@ -20,9 +21,22 @@ void RoadPermutations::roadLenghtCalculate()
 {
     for(int x =0; x < m_possibilityPermutations_v.size();x++){
             QString l_roadName = "";
+            uint l_roadLenght_ui = 0;
             for(int y = 0; y< m_possibilityPermutations_v.at(x).size(); y++){
                 l_roadName = l_roadName + m_possibilityPermutations_v[x][y].name;
+                if(y != (m_possibilityPermutations_v.at(x).size())-1 ){
+                    l_roadLenght_ui = l_roadLenght_ui + (qSqrt(
+                            qPow(qFabs(m_possibilityPermutations_v[x][y].x - m_possibilityPermutations_v[x][y+1].x),2)  +
+                            qPow(qFabs(m_possibilityPermutations_v[x][y].y - m_possibilityPermutations_v[x][y+1].y),2)));
+                }
             }
+
+            m_roadsLenght_v.at(x)->roadName = l_roadName;
+            m_roadsLenght_v.at(x)->lenght = l_roadLenght_ui;
+    }
+    for(int z =0; z < m_roadsLenght_v.size();z++){
+        qDebug() << m_roadsLenght_v.at(z)->roadName;
+        qDebug() << m_roadsLenght_v.at(z)->lenght;
     }
 }
 
@@ -92,8 +106,7 @@ void RoadPermutations::filterPossibilityPermForGreedyPoint()
 
      //Init roadLenght Vector
         for(int l_vectorIterator_i = 0; l_vectorIterator_i < m_possibilityPermutations_v.size();l_vectorIterator_i++){
-            Point::RoadLenght *l_roadsLengh;
+            Point::RoadLenght *l_roadsLengh = new Point::RoadLenght;
             m_roadsLenght_v.push_back(l_roadsLengh);
         }
-       //WTF
 }
