@@ -8,7 +8,7 @@ namespace Point{
 
 struct  RoadLenght{
       QString roadName;
-      uint lenght;
+      double lenght;
 };
 
     class Coordinate{
