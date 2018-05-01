@@ -18,11 +18,18 @@ public:
 
     void startPermutations(QVector<Point::Coordinate> l_allPoints_v);
     void roadLenghtCalculate();
+    void setRoadLengthName(int l_iteratorX, QString l_roadName);
+    void setRoadLength(int l_iteratorX, double l_roadLenght_d);
+    void showRoadsLengthVector();
+
+    QVector<QVector<Point::Coordinate>> getPossibilityPermutations();
+
 
 private:
-    QVector< QVector< Point::Coordinate > > m_allPermutations_v;
-    QVector< QVector< Point::Coordinate > > m_possibilityPermutations_v;
+
     QVector<Point::RoadLenght *> m_roadsLenght_v;
+    QVector<QVector<Point::Coordinate>> m_allPermutations_v;
+    QVector<QVector<Point::Coordinate>> m_possibilityPermutations_v;
 
     void setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v);
     void filterPossibilityPermForGreedyPoint();

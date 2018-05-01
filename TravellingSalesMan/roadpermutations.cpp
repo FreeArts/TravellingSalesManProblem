@@ -17,40 +17,71 @@ void RoadPermutations::startPermutations(QVector<Point::Coordinate> l_allPoints_
     filterPossibilityPermForGreedyPoint();
 }
 
+//Test function for serial method
 void RoadPermutations::roadLenghtCalculate()
 {
-    for(int x =0; x < m_possibilityPermutations_v.size();x++){
-            QString l_roadName = "";
-            double l_roadLenght_d = 0;
-            for(int y = 0; y< m_possibilityPermutations_v.at(x).size(); y++){
-                l_roadName = l_roadName + m_possibilityPermutations_v[x][y].name;
-                if(y != (m_possibilityPermutations_v.at(x).size())-1 ){
-                    if( ((m_possibilityPermutations_v[x][y].x - m_possibilityPermutations_v[x][y+1].x) != 0) &&
-                            ((m_possibilityPermutations_v[x][y].y - m_possibilityPermutations_v[x][y+1].y) != 0))
-                    {
-                        l_roadLenght_d = l_roadLenght_d + (qSqrt(
-                                qPow(qFabs(m_possibilityPermutations_v[x][y].x - m_possibilityPermutations_v[x][y+1].x),2)  +
-                                qPow(qFabs(m_possibilityPermutations_v[x][y].y - m_possibilityPermutations_v[x][y+1].y),2)));
-                    }
-                    else{
-                        if( ((m_possibilityPermutations_v[x][y].x - m_possibilityPermutations_v[x][y+1].x) == 0)){
-                            l_roadLenght_d = l_roadLenght_d + (qFabs(m_possibilityPermutations_v[x][y].y - m_possibilityPermutations_v[x][y+1].y));
-                        }
 
-                        if( ((m_possibilityPermutations_v[x][y].y - m_possibilityPermutations_v[x][y+1].y) == 0)){
-                            l_roadLenght_d = l_roadLenght_d + (qFabs(m_possibilityPermutations_v[x][y].x - m_possibilityPermutations_v[x][y+1].x));
-                        }
-                    }
-                }
-            }
+    for(int l_iteratorX =0; l_iteratorX < m_possibilityPermutations_v.size();l_iteratorX++){
 
-            m_roadsLenght_v.at(x)->roadName = l_roadName;
-            m_roadsLenght_v.at(x)->lenght = l_roadLenght_d;
+        QString l_roadName = "";
+        double l_roadLenght_d = 0;
+
+        for(int l_iteratorY = 0; l_iteratorY < m_possibilityPermutations_v.at(l_iteratorX).size(); l_iteratorY++){
+
+            l_roadName = l_roadName + m_possibilityPermutations_v[l_iteratorX][l_iteratorY].name;
+
+           if(l_iteratorY != (m_possibilityPermutations_v.at(l_iteratorX).size())-1 ){
+
+               if( ((m_possibilityPermutations_v[l_iteratorX][l_iteratorY].x - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].x) != 0) &&
+                       ((m_possibilityPermutations_v[l_iteratorX][l_iteratorY].y - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].y) != 0))
+               {
+                   l_roadLenght_d = l_roadLenght_d + (qSqrt(
+                           qPow(qFabs(m_possibilityPermutations_v[l_iteratorX][l_iteratorY].x - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].x),2)  +
+                           qPow(qFabs(m_possibilityPermutations_v[l_iteratorX][l_iteratorY].y - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].y),2)));
+               }
+
+               else{
+                   if( ((m_possibilityPermutations_v[l_iteratorX][l_iteratorY].x - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].x) == 0)){
+                       l_roadLenght_d = l_roadLenght_d + (qFabs(m_possibilityPermutations_v[l_iteratorX][l_iteratorY].y - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].y));
+                   }
+
+
+                   if( ((m_possibilityPermutations_v[l_iteratorX][l_iteratorY].y - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].y) == 0)){
+                       l_roadLenght_d = l_roadLenght_d + (qFabs(m_possibilityPermutations_v[l_iteratorX][l_iteratorY].x - m_possibilityPermutations_v[l_iteratorX][l_iteratorY+1].x));
+                   }
+               }
+           }
+        }
+
+            setRoadLengthName(l_iteratorX,l_roadName);
+            setRoadLength(l_iteratorX,l_roadLenght_d);
     }
-    for(int z =0; z < m_roadsLenght_v.size();z++){
-        qDebug() << m_roadsLenght_v.at(z)->roadName;
-        qDebug() << m_roadsLenght_v.at(z)->lenght;
+    //For Debug
+    showRoadsLengthVector();
+}
+
+void RoadPermutations::setRoadLengthName(int l_iteratorX, QString l_roadName)
+{
+    m_roadsLenght_v.at(l_iteratorX)->roadName = l_roadName;
+}
+
+void RoadPermutations::setRoadLength(int l_iteratorX, double l_roadLenght_d)
+{
+    m_roadsLenght_v.at(l_iteratorX)->lenght = l_roadLenght_d;
+}
+
+void RoadPermutations::showRoadsLengthVector()
+{
+    //For Debug
+    for(int l_iteratorZ =0; l_iteratorZ < m_roadsLenght_v.size();l_iteratorZ++){
+        qDebug() << m_roadsLenght_v.at(l_iteratorZ)->roadName;
+        qDebug() << m_roadsLenght_v.at(l_iteratorZ)->lenght;
     }
+}
+
+QVector<QVector<Point::Coordinate> > RoadPermutations::getPossibilityPermutations()
+{
+    return m_possibilityPermutations_v;
 }
 
 void RoadPermutations::setAllPermutation( QVector<Point::Coordinate> l_allPointsPrepare_v)
@@ -119,7 +150,7 @@ void RoadPermutations::filterPossibilityPermForGreedyPoint()
 
      //Init roadLenght Vector
         for(int l_vectorIterator_i = 0; l_vectorIterator_i < m_possibilityPermutations_v.size();l_vectorIterator_i++){
-            Point::RoadLenght *l_roadsLengh = new Point::RoadLenght;
-            m_roadsLenght_v.push_back(l_roadsLengh);
+            Point::RoadLenght *l_roadsLength = new Point::RoadLenght;
+            m_roadsLenght_v.push_back(l_roadsLength);
         }
 }
