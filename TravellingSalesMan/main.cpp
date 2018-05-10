@@ -49,6 +49,38 @@ void roadLengthParallelCalc(QVector<QVector<Point::Coordinate>> l_possibilityRoa
     Road.showRoadsLengthVector();
 }
 
+void roadLengthParallelCalcSerial(QVector<QVector<Point::Coordinate>> l_possibilityRoadPermutations_v, RoadPermutations &Road)
+{
+    QString l_roadName;
+    double l_roadLenght_d;
+
+    for(int l_iteratorX =0; l_iteratorX < l_possibilityRoadPermutations_v.size();l_iteratorX++){
+            l_roadName = "";
+            l_roadLenght_d = 0;
+            uint l_maxRowNumber = (l_possibilityRoadPermutations_v.at(l_iteratorX).size())-1;
+
+            for(int l_iteratorY = 0; l_iteratorY < l_possibilityRoadPermutations_v.at(l_iteratorX).size(); l_iteratorY++){
+
+                    l_roadName = l_roadName + l_possibilityRoadPermutations_v[l_iteratorX][l_iteratorY].name;
+
+                if(l_iteratorY != l_maxRowNumber ){
+
+                    {
+                    l_roadLenght_d = l_roadLenght_d + (qSqrt(
+                            qPow(qFabs(l_possibilityRoadPermutations_v[l_iteratorX][l_iteratorY].x - l_possibilityRoadPermutations_v[l_iteratorX][l_iteratorY+1].x),2)  +
+                            qPow(qFabs(l_possibilityRoadPermutations_v[l_iteratorX][l_iteratorY].y - l_possibilityRoadPermutations_v[l_iteratorX][l_iteratorY+1].y),2)));
+                    }
+
+                }
+            }
+
+                Road.setRoadLengthName(l_iteratorX,l_roadName);
+                Road.setRoadLength(l_iteratorX,l_roadLenght_d);
+    }
+    //For Debug
+    Road.showRoadsLengthVector();
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -65,7 +97,9 @@ int main(int argc, char *argv[])
        Point::Coordinate test_point5;
        Point::Coordinate test_point6;
        Point::Coordinate test_point7;
-
+       Point::Coordinate test_point8;
+       Point::Coordinate test_point9;
+       Point::Coordinate test_point10;
 
        test_point1.name = "A";
        test_point2.name = "B";
@@ -74,7 +108,9 @@ int main(int argc, char *argv[])
        test_point5.name = "E";
        test_point6.name = "F";
        test_point7.name = "G";
-
+       test_point8.name = "H";
+       test_point9.name = "I";
+       test_point10.name = "J";
 
 
        test_point1.x = 3;
@@ -84,6 +120,9 @@ int main(int argc, char *argv[])
        test_point5.x = 17;
        test_point6.x = 20;
        test_point7.x = 27;
+       test_point8.x = 33;
+       test_point9.x = 23;
+       test_point10.x = 13;
 
        test_point1.y = 6;
        test_point2.y = 9;
@@ -92,6 +131,9 @@ int main(int argc, char *argv[])
        test_point5.y = 18;
        test_point6.y = 21;
        test_point7.y = 32;
+       test_point8.y = 42;
+       test_point9.y = 15;
+       test_point10.y = 30;
 
 
        QVector<Point::Coordinate> test_vector;
@@ -103,6 +145,9 @@ int main(int argc, char *argv[])
        test_vector.push_back(test_point5);
        test_vector.push_back(test_point6);
        test_vector.push_back(test_point7);
+       test_vector.push_back(test_point8);
+       test_vector.push_back(test_point9);
+       //test_vector.push_back(test_point10);
 
     RoadPermutations Road;
     Road.startPermutations(test_vector);
@@ -112,8 +157,23 @@ int main(int argc, char *argv[])
 
     //Road.roadLenghtCalculate();
 
+    QElapsedTimer timer1;
+    timer1.start();
+
     roadLengthParallelCalc(l_possibilityRoadPermutations_v,Road);
 
+    qDebug() << "parallel" << timer1.elapsed() << "milliseconds";
+    qDebug() << "parallel" << timer1.nsecsElapsed() << "nanoseconds";
+    qDebug() << "-------------------------------------------------------";
+
+    QElapsedTimer timer2;
+    timer2.start();
+
+    roadLengthParallelCalcSerial(l_possibilityRoadPermutations_v,Road);
+
+    qDebug() << "Serial" << timer2.elapsed() << "milliseconds";
+    qDebug() << "Serial" << timer2.nsecsElapsed() << "nanoseconds";
+    qDebug() << "-------------------------";
 
     return a.exec();
 }

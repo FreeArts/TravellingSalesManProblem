@@ -6,7 +6,11 @@
 #include <QDebug>
 #include <algorithm>    // std::next_permutation, std::sort
 
+#include <QtConcurrent/QtConcurrent>
+#include <QFuture>
+
 #include "interfaces.h"
+
 
 class RoadPermutations : public QObject
 {

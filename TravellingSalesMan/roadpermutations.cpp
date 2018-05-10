@@ -1,6 +1,44 @@
 #include "roadpermutations.h"
 #include <QtMath>
 
+//---------
+
+QVector<QVector<Point::Coordinate> > L_setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v){
+    QVector<QVector<Point::Coordinate>> l_allPermutations_v;
+    l_allPermutations_v.push_back(l_allPointsPrepare_v);
+     while(std::next_permutation(l_allPointsPrepare_v.begin(), l_allPointsPrepare_v.end())){
+
+        /*-----------------------------DO NOT USE THESE LINES 'CAUSE EAT ALL MEMORY--------------------
+         QVector<Point::Coordinate> l_tmpCopyVector_v;
+        l_tmpCopyVector_v.clear();
+
+        for(int l_iterator_i = 0; l_iterator_i < l_allPointsPrepare_v.size(); l_iterator_i++){
+                l_tmpCopyVector_v.push_back(l_allPointsPrepare_v.value(l_iterator_i));
+         }
+         m_allPermutations_v.push_back(l_tmpCopyVector_v);
+         ---------------------------------------------------------------------------------------*/
+        l_allPermutations_v.push_back(l_allPointsPrepare_v);
+     }
+
+     ///* For Debug
+     QString string;
+          for(int x = 0; x< l_allPermutations_v.size(); x++){
+                   for(int y = 0; y< l_allPermutations_v.at(x).size(); y++){
+                          string = string + l_allPermutations_v[x][y].name;
+                          if(y == l_allPermutations_v.at(x).size()-1)
+                          {
+                              string.push_back("        ");
+                          }
+                   }
+               }
+
+          qDebug() << string;
+     //--------------*/
+    return l_allPermutations_v;
+}
+
+//-----------
+
 RoadPermutations::RoadPermutations(QObject *parent) : QObject(parent)
 {
 
@@ -13,7 +51,11 @@ RoadPermutations::~RoadPermutations()
 
 void RoadPermutations::startPermutations(QVector<Point::Coordinate> l_allPoints_v)
 {
-    setAllPermutation(l_allPoints_v);
+    QFuture<QVector<QVector<Point::Coordinate>>> t1 = QtConcurrent::run(L_setAllPermutation,l_allPoints_v);
+    t1.waitForFinished();
+    m_allPermutations_v = t1.result();
+
+    //setAllPermutation(l_allPoints_v);
     filterPossibilityPermForGreedyPoint();
 }
 
