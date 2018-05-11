@@ -1,7 +1,7 @@
 #include "roadpermutations.h"
 #include <QtMath>
 
-//---------
+//---------Permutation Function---
 
 QVector<QVector<Point::Coordinate> > L_setAllPermutation(QVector<Point::Coordinate> l_allPointsPrepare_v){
     QVector<QVector<Point::Coordinate>> l_allPermutations_v;
@@ -37,32 +37,13 @@ QVector<QVector<Point::Coordinate> > L_setAllPermutation(QVector<Point::Coordina
     return l_allPermutations_v;
 }
 
-//-----------
 
-RoadPermutations::RoadPermutations(QObject *parent) : QObject(parent)
-{
-
-}
-
-RoadPermutations::~RoadPermutations()
-{
-
-}
-
-void RoadPermutations::startPermutations(QVector<Point::Coordinate> l_allPoints_v)
-{
-    QFuture<QVector<QVector<Point::Coordinate>>> t1 = QtConcurrent::run(L_setAllPermutation,l_allPoints_v);
-    t1.waitForFinished();
-    m_allPermutations_v = t1.result();
-
-    //setAllPermutation(l_allPoints_v);
-    filterPossibilityPermForGreedyPoint();
-}
+//---Debug Functions------------------
 
 //Test function for serial method
 void RoadPermutations::roadLenghtCalculate()
 {
-
+/*
     for(int l_iteratorX =0; l_iteratorX < m_possibilityPermutations_v.size();l_iteratorX++){
 
         QString l_roadName = "";
@@ -99,47 +80,14 @@ void RoadPermutations::roadLenghtCalculate()
             setRoadLength(l_iteratorX,l_roadLenght_d);
     }
     //For Debug
-    showRoadsLengthVector();
+    showRoadsLengthVector(); */
 }
 
-void RoadPermutations::setRoadLengthName(int l_iteratorX, QString l_roadName)
-{
-    m_roadsLenght_v.at(l_iteratorX)->roadName = l_roadName;
-}
-
-void RoadPermutations::setRoadLength(int l_iteratorX, double l_roadLenght_d)
-{
-    m_roadsLenght_v.at(l_iteratorX)->lenght = l_roadLenght_d;
-}
-
-void RoadPermutations::showRoadsLengthVector()
-{
-    //For Debug
-    for(int l_iteratorZ =0; l_iteratorZ < m_roadsLenght_v.size();l_iteratorZ++){
-        qDebug() << m_roadsLenght_v.at(l_iteratorZ)->roadName;
-        qDebug() << m_roadsLenght_v.at(l_iteratorZ)->lenght;
-    }
-}
-
-QVector<QVector<Point::Coordinate> > RoadPermutations::getPossibilityPermutations()
-{
-    return m_possibilityPermutations_v;
-}
-
+/* //Debug function for Permutation test
 void RoadPermutations::setAllPermutation( QVector<Point::Coordinate> l_allPointsPrepare_v)
 {
     m_allPermutations_v.push_back(l_allPointsPrepare_v);
      while(std::next_permutation(l_allPointsPrepare_v.begin(), l_allPointsPrepare_v.end())){
-
-        /*-----------------------------DO NOT USE THESE LINES 'CAUSE EAT ALL MEMORY--------------------
-         QVector<Point::Coordinate> l_tmpCopyVector_v;
-        l_tmpCopyVector_v.clear();
-
-        for(int l_iterator_i = 0; l_iterator_i < l_allPointsPrepare_v.size(); l_iterator_i++){
-                l_tmpCopyVector_v.push_back(l_allPointsPrepare_v.value(l_iterator_i));
-         }
-         m_allPermutations_v.push_back(l_tmpCopyVector_v);
-         ---------------------------------------------------------------------------------------*/
         m_allPermutations_v.push_back(l_allPointsPrepare_v);
      }
 
@@ -156,8 +104,84 @@ void RoadPermutations::setAllPermutation( QVector<Point::Coordinate> l_allPoints
                }
 
           qDebug() << string;
-     //--------------*/
 }
+*/
+
+//-----------------------------------
+
+
+RoadPermutations::RoadPermutations(QObject *parent) : QObject(parent)
+{
+
+}
+
+RoadPermutations::~RoadPermutations()
+{
+
+}
+
+void RoadPermutations::startPermutations(QVector<Point::Coordinate> l_allPoints_v)
+{
+    QFuture<QVector<QVector<Point::Coordinate>>> tmp_thread = QtConcurrent::run(L_setAllPermutation,l_allPoints_v);
+    tmp_thread.waitForFinished();
+    m_allPermutations_v = tmp_thread.result();
+
+    filterPossibilityPermForGreedyPoint();
+}
+
+
+void RoadPermutations::setRoadLengthName(int l_iteratorX, QString l_roadName)
+{
+    m_roadsLenght_v.at(l_iteratorX)->roadName = l_roadName;
+}
+
+void RoadPermutations::setRoadLength(int l_iteratorX, double l_roadLenght_d)
+{
+    m_roadsLenght_v.at(l_iteratorX)->lenght = l_roadLenght_d;
+}
+
+void RoadPermutations::showRoadsLengthVector()
+{
+    //For Debug
+    QString l_worstRoadName="";
+    uint l_worstRoadLength_ui=0;
+
+    QString l_bestRoadName="";
+    uint l_bestRoadLength_ui=0;
+
+    for(int l_iteratorZ =0; l_iteratorZ < m_roadsLenght_v.size();l_iteratorZ++){
+        qDebug() << m_roadsLenght_v.at(l_iteratorZ)->roadName;
+        qDebug() << m_roadsLenght_v.at(l_iteratorZ)->lenght;
+
+        if(l_worstRoadLength_ui < m_roadsLenght_v.at(l_iteratorZ)->lenght)
+        {
+            l_worstRoadLength_ui = m_roadsLenght_v.at(l_iteratorZ)->lenght;
+            l_worstRoadName = m_roadsLenght_v.at(l_iteratorZ)->roadName;
+        }
+    }
+
+    qDebug() << "Worst Road";
+    qDebug() << l_worstRoadName;
+    qDebug() << l_worstRoadLength_ui;
+
+    for(int l_iteratorZ =0; l_iteratorZ < m_roadsLenght_v.size();l_iteratorZ++){
+        if(l_worstRoadLength_ui > m_roadsLenght_v.at(l_iteratorZ)->lenght)
+        {
+            l_bestRoadLength_ui = m_roadsLenght_v.at(l_iteratorZ)->lenght;
+            l_bestRoadName = m_roadsLenght_v.at(l_iteratorZ)->roadName;
+        }
+    }
+
+    qDebug() << "Best Road";
+    qDebug() << l_bestRoadName;
+    qDebug() << l_bestRoadLength_ui;
+}
+
+QVector<QVector<Point::Coordinate> > RoadPermutations::getPossibilityPermutations()
+{
+    return m_possibilityPermutations_v;
+}
+
 
 void RoadPermutations::filterPossibilityPermForGreedyPoint()
 {
