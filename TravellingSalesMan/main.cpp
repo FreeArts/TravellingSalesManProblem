@@ -145,8 +145,8 @@ int main(int argc, char *argv[])
        test_vector.push_back(test_point5);
        test_vector.push_back(test_point6);
        test_vector.push_back(test_point7);
-       test_vector.push_back(test_point8);
-       test_vector.push_back(test_point9);
+       //test_vector.push_back(test_point8);
+       //test_vector.push_back(test_point9);
        //test_vector.push_back(test_point10);
 
     RoadPermutations Road;

@@ -144,37 +144,37 @@ void RoadPermutations::showRoadsLengthVector()
 {
     //For Debug
     QString l_worstRoadName="";
-    uint l_worstRoadLength_ui=0;
+    double l_worstRoadLength_d=0;
 
     QString l_bestRoadName="";
-    uint l_bestRoadLength_ui=0;
+    double l_bestRoadLength_d=0;
 
     for(int l_iteratorZ =0; l_iteratorZ < m_roadsLenght_v.size();l_iteratorZ++){
         qDebug() << m_roadsLenght_v.at(l_iteratorZ)->roadName;
         qDebug() << m_roadsLenght_v.at(l_iteratorZ)->lenght;
 
-        if(l_worstRoadLength_ui < m_roadsLenght_v.at(l_iteratorZ)->lenght)
+        if(l_worstRoadLength_d < m_roadsLenght_v.at(l_iteratorZ)->lenght)
         {
-            l_worstRoadLength_ui = m_roadsLenght_v.at(l_iteratorZ)->lenght;
+            l_worstRoadLength_d = m_roadsLenght_v.at(l_iteratorZ)->lenght;
             l_worstRoadName = m_roadsLenght_v.at(l_iteratorZ)->roadName;
         }
     }
 
     qDebug() << "Worst Road";
     qDebug() << l_worstRoadName;
-    qDebug() << l_worstRoadLength_ui;
+    qDebug() << l_worstRoadLength_d;
 
     for(int l_iteratorZ =0; l_iteratorZ < m_roadsLenght_v.size();l_iteratorZ++){
-        if(l_worstRoadLength_ui > m_roadsLenght_v.at(l_iteratorZ)->lenght)
+        if(l_worstRoadLength_d > m_roadsLenght_v.at(l_iteratorZ)->lenght)
         {
-            l_bestRoadLength_ui = m_roadsLenght_v.at(l_iteratorZ)->lenght;
+            l_bestRoadLength_d = m_roadsLenght_v.at(l_iteratorZ)->lenght;
             l_bestRoadName = m_roadsLenght_v.at(l_iteratorZ)->roadName;
         }
     }
 
     qDebug() << "Best Road";
     qDebug() << l_bestRoadName;
-    qDebug() << l_bestRoadLength_ui;
+    qDebug() << l_bestRoadLength_d;
 }
 
 QVector<QVector<Point::Coordinate> > RoadPermutations::getPossibilityPermutations()
